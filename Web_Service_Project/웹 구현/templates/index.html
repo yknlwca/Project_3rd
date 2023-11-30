@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 업로드 및 표시 페이지</title>
+</head>
+<body>
+    <h1>이미지 업로드 및 표시 페이지</h1>
+    
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="imageInput" name="images" accept="image/*" multiple>
+        <input type="button" value="이미지 전송" onclick="uploadImages()">
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function uploadImages() {
+            var formData = new FormData(document.getElementById('uploadForm'));
+
+            // AJAX를 사용하여 서버로 이미지 전송
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload', true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById('result').innerHTML = response.result;
+
+                    // 이미지 전송이 완료되면 입력 필드 초기화
+                    document.getElementById('imageInput').value = '';
+
+                    // 이미지 전송이 완료되면 페이지를 '/display'로 이동
+                    // window.location.href = '/display';
+                    window.location.href = '/yolo';
+                } else {
+                    console.error('이미지 전송 실패');
+                }
+            };
+            xhr.send(formData);
+        }
+    </script>
+</body>
+</html>

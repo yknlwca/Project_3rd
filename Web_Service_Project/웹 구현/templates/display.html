@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection</title>
+    <style>
+        .center-text {
+            text-align: left;
+            font-size: 36px;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="center-text">오브젝트 검출 결과</div>
+    
+    <table>
+        <tr>
+            <th>오브젝트 검출 이미지</th>
+            <th>검출된 오브젝트</th>
+        </tr>
+        {% for data in image_data %}
+        <tr>
+            <td><img src="{{ url_for('static', filename='detects/' + data['filename']) }}" width="400"></td>
+            <td>
+                {% for desc in data['descriptions'] %}
+                {{ desc }}<br>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
